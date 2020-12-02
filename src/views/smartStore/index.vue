@@ -4,19 +4,16 @@
 
 <script>
 import * as THREE from 'three'
-const OrbitControls = require('three-orbit-controls')(THREE);
+const OrbitControls = require('three-orbit-controls')(THREE)
+import createWall from './wall'
 export default {
   name: "index",
   data() {
     return {
-      mesh: null,
       camera: null,
       scene: null,
       renderer: null,
-      orbitControls: null,
-      ambientLight: null,
-      spotLight: null,
-      circle: null
+      orbitControls:null
     }
   },
   mounted() {
@@ -25,9 +22,8 @@ export default {
   methods: {
     init() {
       this.creatScene()
-      this.creatCircle()
       this.creatFloor()
-      this.createLight()
+      this.creatWall()
       this.creatCamera()
       this.creatRenderer()
       this.createControls()
@@ -50,21 +46,17 @@ export default {
       floor.name = "地面"
       this.scene.add(floor)
     },
-    creatCircle() {
-      this.circle = new THREE.BoxGeometry(50, 50, 50)
-      const material = new THREE.MeshBasicMaterial({color: "#ff8a1b"})
-      this.mesh = new THREE.Mesh(this.circle, material)
-      this.scene.add(this.mesh)
-    },
-    createLight() {
-      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3) //模拟远处类似太阳的光源
-      directionalLight.color.setHSL(0.1, 1, 0.95)
-      directionalLight.position.set(0, 200, 0).normalize()
-      this.scene.add(directionalLight)
+    creatWall() {
+      const matArrayB = new THREE.MeshBasicMaterial({color: '#AFC0CA'})
+      const wallWest = createWall(10, 200, 1400,0, matArrayB, -1295, 100, 0, "墙面")
+      const wallSouth = createWall(10, 200, 1400, 1,matArrayB, 1295, 100, 0, "墙面")
+      const wallEast = createWall(10, 200, 2600, 1.5,matArrayB, 0, 100, -700, "墙面")
+      const wallNorth = createWall(10, 200, 2600, 1.5,matArrayB, 0, 100,700, "墙面")
+      this.scene.add(wallWest)
+      this.scene.add(wallSouth)
+      this.scene.add(wallEast)
+      this.scene.add(wallNorth)
 
-      const ambient = new THREE.AmbientLight(0xffffff, 1) //AmbientLight,影响整个场景的光源
-      ambient.position.set(0, 0, 0)
-      this.scene.add(ambient)
     },
     creatRenderer() {
       const element = document.getElementById('container')
