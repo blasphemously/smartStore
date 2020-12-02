@@ -16,3 +16,7 @@ import {OBJLoader, MTLLoader} from 'three-obj-mtl-loader'; //.obj和.mtl文件�
 import {CSS2DRenderer, CSS2DObject} from 'three-css2drender';//three-css2drender 插件
 
  ```
+```
+import * as THREE from "three"
+const ThreeBSP = require('tthreebsp')(THREE) //导入threeBSP库，需要同时导入three库
+```
