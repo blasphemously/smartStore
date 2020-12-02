@@ -6,7 +6,7 @@ function createWall(width, height, depth, angle, material, x, y, z, name) {
     wall.position.y = y
     wall.position.z = z
     wall.name = name
-    wall.rotation.y += angle * Math.PI; //-逆时针旋转,+顺时针
+    wall.rotation.y += angle * Math.PI; //-逆时针旋转,+顺时针 控制墙体旋转
     return wall
 }
 
