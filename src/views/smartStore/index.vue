@@ -73,6 +73,7 @@ export default {
     },
     creatRenderer() {
       const element = document.getElementById('container')
+
       this.renderer = new THREE.WebGLRenderer({
         antialias: true,//是否开启反锯齿，设置为true开启反锯齿。
         alpha: true,//是否可以设置背景色透明。
