@@ -24,6 +24,7 @@ export default {
       this.creatScene()
       this.creatFloor()
       this.creatWall()
+      this.creatPoint()
       this.creatCamera()
       this.creatRenderer()
       this.createControls()
@@ -40,14 +41,14 @@ export default {
     },
     creatFloor() {
       const floorGeometry = new THREE.BoxGeometry(2600, 1400, 1)
-      const floorMaterial = new THREE.MeshBasicMaterial({color: '#84A1B2'})
+      const floorMaterial = new THREE.MeshLambertMaterial({color: '#84A1B2'})
       const floor = new THREE.Mesh(floorGeometry, floorMaterial)
       floor.rotation.x = -Math.PI / 2
       floor.name = "地面"
       this.scene.add(floor)
     },
     creatWall() {
-      const matArrayB = new THREE.MeshBasicMaterial({color: '#AFC0CA'})
+      const matArrayB = new THREE.MeshLambertMaterial({color: '#AFC0CA'})
       const wallWest = createWall(10, 200, 1400,0, matArrayB, -1295, 100, 0, "墙面")
       const wallSouth = createWall(10, 200, 1400, 1,matArrayB, 1295, 100, 0, "墙面")
       const wallEast = createWall(10, 200, 2600, 1.5,matArrayB, 0, 100, -700, "墙面")
@@ -56,7 +57,19 @@ export default {
       this.scene.add(wallSouth)
       this.scene.add(wallEast)
       this.scene.add(wallNorth)
+    },
+    creatPoint() {
+      const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3) //模拟远处类似太阳的光源
+      directionalLight.color.setHSL(0.1, 1, 0.95)
+      directionalLight.position.set(0, 200, 0).normalize()
+      this.scene.add(directionalLight)
 
+      const ambient = new THREE.AmbientLight(0xffffff, 1) //AmbientLight,影响整个场景的光源
+      ambient.position.set(0, 0, 0)
+      this.scene.add(ambient)
+      const  pointLight = new THREE.PointLight(0xffffff)
+      pointLight.position.set(400, 200, 200)
+      this.scene.add(pointLight)
     },
     creatRenderer() {
       const element = document.getElementById('container')
