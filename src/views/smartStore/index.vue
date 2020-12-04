@@ -14,8 +14,7 @@ export default {
     return {
       camera: null,
       scene: null,
-      renderer: null,
-      orbitControls: null
+      renderer: null
     }
   },
   mounted() {
@@ -99,7 +98,16 @@ export default {
       requestAnimationFrame(this.render)
     },
     createControls() {
-      this.orbitControls = new OrbitControls(this.camera, this.renderer.domElement)
+      const controls = new OrbitControls(this.camera, this.renderer.domElement)
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.5;
+      // 视角最小距离
+      controls.minDistance = 100;
+      // 视角最远距离
+      controls.maxDistance = 5000;
+      // 最大角度
+      controls.maxPolarAngle = Math.PI / 2.2;
+      controls.target = new THREE.Vector3(50,50,0);
     }
   }
 }
