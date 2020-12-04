@@ -1,11 +1,13 @@
 <template>
-<div id="container"></div>
+  <div id="container"></div>
 </template>
 
 <script>
 import * as THREE from 'three'
+
 const OrbitControls = require('three-orbit-controls')(THREE)
 import createWall from './wall'
+
 export default {
   name: "index",
   data() {
@@ -13,7 +15,7 @@ export default {
       camera: null,
       scene: null,
       renderer: null,
-      orbitControls:null
+      orbitControls: null
     }
   },
   mounted() {
@@ -40,19 +42,27 @@ export default {
       this.scene.add(this.camera)
     },
     creatFloor() {
-      const floorGeometry = new THREE.BoxGeometry(2600, 1400, 1)
-      const floorMaterial = new THREE.MeshLambertMaterial({color: '#84A1B2'})
-      const floor = new THREE.Mesh(floorGeometry, floorMaterial)
-      floor.rotation.x = -Math.PI / 2
-      floor.name = "地面"
-      this.scene.add(floor)
+      const Texturing = require('../../../public/smartStore/images/floor.jpg')
+      const loader = new THREE.TextureLoader()
+      loader.load(Texturing, (texture) => {
+        texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+        texture.repeat.set(10, 10);
+        const floorGeometry = new THREE.BoxGeometry(2600, 1400, 1)
+        const floorMaterial = new THREE.MeshBasicMaterial({
+          map: texture,
+        });
+        const floor = new THREE.Mesh(floorGeometry, floorMaterial)
+        floor.rotation.x = -Math.PI / 2
+        floor.name = "地面";
+        this.scene.add(floor);
+      })
     },
     creatWall() {
       const matArrayB = new THREE.MeshLambertMaterial({color: '#AFC0CA'})
-      const wallWest = createWall(10, 200, 1400,0, matArrayB, -1295, 100, 0, "墙面")
-      const wallSouth = createWall(10, 200, 1400, 1,matArrayB, 1295, 100, 0, "墙面")
-      const wallEast = createWall(10, 200, 2600, 1.5,matArrayB, 0, 100, -700, "墙面")
-      const wallNorth = createWall(10, 200, 2600, 1.5,matArrayB, 0, 100,700, "墙面")
+      const wallWest = createWall(10, 200, 1400, 0, matArrayB, -1295, 100, 0, "墙面")
+      const wallSouth = createWall(10, 200, 1400, 1, matArrayB, 1295, 100, 0, "墙面")
+      const wallEast = createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, -700, "墙面")
+      const wallNorth = createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, 700, "墙面")
       this.scene.add(wallWest)
       this.scene.add(wallSouth)
       this.scene.add(wallEast)
@@ -67,7 +77,7 @@ export default {
       const ambient = new THREE.AmbientLight(0xffffff, 1) //AmbientLight,影响整个场景的光源
       ambient.position.set(0, 0, 0)
       this.scene.add(ambient)
-      const  pointLight = new THREE.PointLight(0xffffff)
+      const pointLight = new THREE.PointLight(0xffffff)
       pointLight.position.set(400, 200, 200)
       this.scene.add(pointLight)
     },
