@@ -7,6 +7,7 @@
 
 	const OrbitControls = require('three-orbit-controls')(THREE)
 	import createWall from './wall'
+  import creatFloor from "@/views/smartStore/floor";
 
 	export default {
 		name: "index",
@@ -14,7 +15,7 @@
 			return {
 				camera: null,
 				scene: null,
-				renderer: null
+				renderer: null,
 			}
 		},
 		mounted() {
@@ -23,7 +24,7 @@
 		methods: {
 			init() {
 				this.creatScene()
-				this.creatFloor()
+        creatFloor(2600,1400,1,this.scene)
 				this.creatWall()
 				this.creatPoint()
 				this.creatCamera()
@@ -39,22 +40,6 @@
 				this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
 				this.camera.position.set(0, 1600, 1000)
 				this.scene.add(this.camera)
-			},
-			creatFloor() {
-				const Texturing = require('../../../public/smartStore/images/floor.jpg') // 只有用require方法,代替load里直接放进的url
-				const loader = new THREE.TextureLoader()
-				loader.load(Texturing, (texture) => {
-					texture.wrapS = texture.wrapT = THREE.RepeatWrapping
-					texture.repeat.set(10, 10);
-					const floorGeometry = new THREE.BoxGeometry(2600, 1400, 1)
-					const floorMaterial = new THREE.MeshBasicMaterial({ //地板使用基础网格材料可以将贴图放上使用MeshLambertMaterial不行
-						map: texture,
-					});
-					const floor = new THREE.Mesh(floorGeometry, floorMaterial)
-					floor.rotation.x = -Math.PI / 2
-					floor.name = "地面";
-					this.scene.add(floor);
-				})
 			},
 			creatWall() {
 				const matArrayB = new THREE.MeshLambertMaterial({
