@@ -8,6 +8,7 @@
 	const OrbitControls = require('three-orbit-controls')(THREE)
 	import createWall from './wall'
   import creatFloor from "@/views/smartStore/floor";
+  // import withDoorWall from "./door"
 
 	export default {
 		name: "index",
@@ -48,8 +49,10 @@
 				createWall(10, 200, 1400, 0, matArrayB, -1295, 100, 0, "墙面", this.scene)
 				createWall(10, 200, 1400, 1, matArrayB, 1295, 100, 0, "墙面", this.scene)
 				createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, -700, "墙面", this.scene)
-				createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, 700, "墙面", this.scene)
-			},
+				// createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, 700, "墙面", this.scene)
+        // withDoorWall(10,200,2600,50,100,10,100,matArrayB,0,100,700,this.scene)
+
+      },
 			creatPoint() {
 				const directionalLight = new THREE.DirectionalLight(0xffffff, 0.3) //模拟远处类似太阳的光源
 				directionalLight.color.setHSL(0.1, 1, 0.95)
