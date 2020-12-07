@@ -4,7 +4,6 @@
 
 <script>
 	import * as THREE from 'three'
-
 	const OrbitControls = require('three-orbit-controls')(THREE)
 	import createWall from './wall'
   import creatFloor from "@/views/smartStore/floor";
