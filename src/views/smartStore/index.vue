@@ -7,18 +7,19 @@
 	const OrbitControls = require('three-orbit-controls')(THREE)
 	import createWall from './wall'
   import creatFloor from "@/views/smartStore/floor";
-  // import withDoorWall from "./door"
+  import withDoorWall from "./door"
 
 	export default {
 		name: "index",
 		data() {
 			return {
-				camera: null,
-				scene: null,
-				renderer: null,
 			}
 		},
 		mounted() {
+      this.scene = null
+      this.renderer = null
+      this.camera = null
+      this.controls = null
 			this.init()
 		},
 		methods: {
@@ -43,13 +44,17 @@
 			},
 			creatWall() {
 				const matArrayB = new THREE.MeshLambertMaterial({
-					color: '#AFC0CA'
+          color: 0x9cb2d1,
+          specular: 0x9cb2d1,
+          shininess: 30,
+          transparent: true,
+          opacity: 1
 				}) //使用基础网格材料没有反光,无法体现光源
 				createWall(10, 200, 1400, 0, matArrayB, -1295, 100, 0, "墙面", this.scene)
 				createWall(10, 200, 1400, 1, matArrayB, 1295, 100, 0, "墙面", this.scene)
 				createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, -700, "墙面", this.scene)
-				// createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, 700, "墙面", this.scene)
-        // withDoorWall(10,200,2600,50,100,10,100,matArrayB,0,100,700,this.scene)
+        withDoorWall(10, 200, 2600, 10, 150, 300, 0,75,700, 0, 100, 700, this.scene,0.5,matArrayB)
+
 
       },
 			creatPoint() {
@@ -67,11 +72,10 @@
 			},
 			creatRenderer() {
 				const element = document.getElementById('container')
-
 				this.renderer = new THREE.WebGLRenderer({
 					antialias: true, //是否开启反锯齿，设置为true开启反锯齿。
 					alpha: true, //是否可以设置背景色透明。
-					// logarithmicDepthBuffer: true//模型的重叠部位便不停的闪烁起来。这便是Z-Fighting问题，为解决这个问题，我们可以采用该种方法
+					logarithmicDepthBuffer: true//模型的重叠部位便不停的闪烁起来。这便是Z-Fighting问题，为解决这个问题，我们可以采用该种方法
 				})
 				this.renderer.setSize(window.innerWidth, window.innerHeight)
 				this.renderer.setClearColor('#39609B', 1.0)
@@ -79,22 +83,29 @@
 				element.appendChild(this.renderer.domElement)
 			},
 			render() {
-				this.renderer.render(this.scene, this.camera)
-				requestAnimationFrame(this.render)
+        this.renderer.render(this.scene, this.camera)
+        window.requestAnimationFrame(this.render.bind(this))
 			},
 			createControls() {
-				const controls = new OrbitControls(this.camera, this.renderer.domElement)
-				controls.enableDamping = true;
-				controls.dampingFactor = 0.5;
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+        this.controls.enableDamping = true;
+        this.controls.dampingFactor = 0.5;
 				// 视角最小距离
-				controls.minDistance = 100;
+        this.controls.minDistance = 100;
 				// 视角最远距离
-				controls.maxDistance = 5000;
+        this.controls.maxDistance = 5000;
 				// 最大角度
-				controls.maxPolarAngle = Math.PI / 2.2;
-				controls.target = new THREE.Vector3(50, 50, 0);
+        this.controls.maxPolarAngle = Math.PI / 2.2;
+        this.controls.target = new THREE.Vector3(50, 50, 0);
 			}
-		}
+		},
+    beforeDestroy() {
+      this.scene = null
+      this.renderer = null
+      this.camera = null
+      this.controls = null
+    }
+
 	}
 </script>
 
