@@ -2,7 +2,7 @@ import * as THREE from 'three'
 
 function cargoArea(storeId, scene) {
 //未有数据无法运行
-    for (let i = 0; i < storeId.length; i++) {
+    for (let i = 0; i < storeId.length; i++) {  //后台传过来的仓库的数据是个数组,所以要循环出来
         const cargoAreaNum = storeId[i]
         const area_x = cargoAreaNum.position.x || 400 //库区定位x
 
@@ -20,20 +20,20 @@ function cargoArea(storeId, scene) {
         // const shelfInterval = shelfSize + interval  // 货位加距离
         // const aisleWidth = shelfInterval * shelfRow
         // const aisleLength = shelfInterval * shelfColumn
-        const Texturing = require('../../../public/static/images/line.png')
+        const Texturing = require('../../../public/static/images/line.png') //请求图片url路径,在vue中textureloader只能先进行require请求在放到textuteloader
 
         const lineMat = new THREE.TextureLoader().load(Texturing, function (map) {
             lineMat.map = map
             lineMat.needsUpdate = true
         })
 
-        const cargoArea = new THREE.PlaneGeometry(lineWidth, area_depth)
+        const cargoArea = new THREE.PlaneGeometry(lineWidth, area_depth) // 创建平面图形
         const floorMaterial = new THREE.MeshBasicMaterial({
             map: lineMat,
         })
-        const obj = new THREE.Mesh(cargoArea, floorMaterial)
-        obj.position.set(area_x + lineWidth / 2, 1.5, -(area_z + area_depth / 2))
-        obj.rotation.x = -Math.PI / 2.0
+        const obj = new THREE.Mesh(cargoArea, floorMaterial) //组合
+        obj.position.set(area_x + lineWidth / 2, 1.5, -(area_z + area_depth / 2)) //动态定位,数据从后端获取
+        obj.rotation.x = -Math.PI / 2.0  //翻转
         const obj2 = obj.clone()
         obj2.translateX(area_width)
 
@@ -45,16 +45,16 @@ function cargoArea(storeId, scene) {
         const obj4 = obj3.clone()
         obj4.translateX(lineWidth - area_depth)
 
-        const group = new THREE.Group()
+        const group = new THREE.Group() //将四条直线组合成一个对象
         group.add(obj)
         group.add(obj2)
         group.add(obj3)
         group.add(obj4)
         scene.add(group)
 
-        const textLoader = new THREE.FontLoader()
+        const textLoader = new THREE.FontLoader() //库位上的文字,用于显示库位编号
         const cargoAreaName = "第九十八号库位 "
-        const url = ('/font/STKaiti_Regular.json')
+        const url = ('/font/STKaiti_Regular.json')  //3d文字需要请求json文字文件
         textLoader.load(url, font => {
             const storeText = new THREE.TextGeometry(cargoAreaName,
                 {
