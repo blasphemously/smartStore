@@ -12,6 +12,8 @@ function creatFloor(floorWidth, floorHeight, floorDepth, scene, storeName) {
         })
         const floor = new THREE.Mesh(floorGeometry, floorMaterial)
         floor.rotation.x = -Math.PI / 2
+        floor.position.x = floorWidth/2
+        floor.position.z = -floorHeight/2
         floor.name = "地面"
         scene.add(floor)
         const textLoader = new THREE.FontLoader()
@@ -23,17 +25,10 @@ function creatFloor(floorWidth, floorHeight, floorDepth, scene, storeName) {
                     height: 40,
                     font: font,
                     curveSegments: 8,
-                    // bevelEnable: true,
-                    // bevelThickness: 20,
-                    // bevelSize: 10,
-                    // bevelSegments: 10
-
                 })
-            console.log('的辅导辅导费')
             const color = new THREE.MeshPhongMaterial({color: 0x9cb2d1});
             const textNum = new THREE.Mesh(storeText, color)
-            textNum.position.set(-800, 800, 0)
-            // textNum.rotation.y = -1.1
+            textNum.position.set(200, 1000, -floorDepth/2)
             scene.add(textNum)
         })
     })

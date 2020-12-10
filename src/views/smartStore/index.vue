@@ -39,7 +39,7 @@
 			},
 			creatCamera() {
 				this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
-				this.camera.position.set(0, 2600, 2000)
+				this.camera.position.set(1300, 2600, 2000)
 				this.scene.add(this.camera)
 			},
 			creatWall() {
@@ -48,10 +48,11 @@
           transparent: true,
           opacity: 1
 				}) //使用基础网格材料没有反光,无法体现光源
-				createWall(10, 200, 1400, 0, matArrayB, -1295, 100, 0, "墙面", this.scene)
-				createWall(10, 200, 1400, 1, matArrayB, 1295, 100, 0, "墙面", this.scene)
-				createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, -700, "墙面", this.scene)
-        withDoorWall(10, 200, 2600, 10, 150, 300, 0,75,700, 0, 100, 700, this.scene,0.5,matArrayB)
+        createWall(1400, 200, 10, 0.5, matArrayB, 2600, 100, -700, "墙面", this.scene) //右
+        createWall(1400,200,10,   0.5, matArrayB, 0, 100, -700, "墙面", this.scene)  // 左
+        createWall(2600,  200,10, 0, matArrayB, 1300, 100, -1400, "墙面", this.scene) //后
+        // createWall(10, 200, 2600, 1.5, matArrayB, 0, 100, 700, "墙面", this.scene)
+        withDoorWall(2600,200,  10, 300, 150, 20, 500,75,-5, 1300, 100, -5, this.scene,0,matArrayB)
 
 
       },
@@ -86,15 +87,16 @@
 			},
 			createControls() {
         this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-        this.controls.enableDamping = true;
-        this.controls.dampingFactor = 0.5;
+        this.controls.enableDamping = true
+        this.controls.dampingFactor = 0.5
 				// 视角最小距离
-        this.controls.minDistance = 1;
+        this.controls.minDistance = 1
 				// 视角最远距离
-        this.controls.maxDistance = 5000;
+        this.controls.maxDistance = 5000
 				// 最大角度
-        this.controls.maxPolarAngle = Math.PI / 2.2;
-        this.controls.target = new THREE.Vector3(50, 50, 0);
+        this.controls.maxPolarAngle = Math.PI / 2.2
+        this.controls.target = new THREE.Vector3(1300, 50, -700)
+        this.controls.update()  //使用控制器设置旋转后更新,设置控制器后camera不能设置lookat,在这里uodate更新相机
 			}
 		},
     beforeDestroy() {
