@@ -25,7 +25,7 @@
 		methods: {
 			init() {
 				this.creatScene()
-        creatFloor(2600,1400,1,this.scene)
+        creatFloor(2600,1400,1,this.scene,'蓝白第一仓库')
 				this.creatWall()
 				this.creatPoint()
 				this.creatCamera()
@@ -39,14 +39,12 @@
 			},
 			creatCamera() {
 				this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 10000);
-				this.camera.position.set(0, 1600, 1000)
+				this.camera.position.set(0, 2600, 2000)
 				this.scene.add(this.camera)
 			},
 			creatWall() {
 				const matArrayB = new THREE.MeshLambertMaterial({
           color: 0x9cb2d1,
-          specular: 0x9cb2d1,
-          shininess: 30,
           transparent: true,
           opacity: 1
 				}) //使用基础网格材料没有反光,无法体现光源
@@ -100,10 +98,10 @@
 			}
 		},
     beforeDestroy() {
-      this.scene = null
-      this.renderer = null
-      this.camera = null
-      this.controls = null
+      this.scene.dispose()
+      this.renderer.dispose()
+      this.camera.dispose()
+      this.controls.dispose()
     }
 
 	}

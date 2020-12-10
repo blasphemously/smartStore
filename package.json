@@ -11,6 +11,7 @@
     "core-js": "^3.6.5",
     "three": "^0.123.0",
     "three-css2drender": "^1.0.0",
+    "three-js-csg": "^72.0.0",
     "three-obj-mtl-loader": "^1.0.3",
     "three-orbit-controls": "^82.1.0",
     "threebsp": "^1.0.4",
