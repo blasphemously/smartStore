@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 
 function cargoArea(storeId, scene) {
-
+//未有数据无法运行
     for (let i = 0; i < storeId.length; i++) {
         const cargoAreaNum = storeId[i]
         const area_x = cargoAreaNum.position.x || 400 //库区定位x
