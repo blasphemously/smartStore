@@ -8,8 +8,10 @@
 	import createWall from './wall'
   import creatFloor from "@/views/smartStore/floor";
   import withDoorWall from "./door"
+  import cargoArea from './cargoarea'
 
-	export default {
+
+  export default {
 		name: "index",
 		data() {
 			return {
@@ -28,6 +30,7 @@
         creatFloor(2600,1400,1,this.scene,'蓝白第一仓库')
 				this.creatWall()
 				this.creatPoint()
+        cargoArea([],this.scene)
 				this.creatCamera()
 				this.creatRenderer()
 				this.createControls()
