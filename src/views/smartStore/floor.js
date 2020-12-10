@@ -12,8 +12,8 @@ function creatFloor(floorWidth, floorHeight, floorDepth, scene, storeName) {
         })
         const floor = new THREE.Mesh(floorGeometry, floorMaterial)
         floor.rotation.x = -Math.PI / 2
-        floor.position.x = floorWidth/2
-        floor.position.z = -floorHeight/2
+        floor.position.x = floorWidth / 2
+        floor.position.z = -floorHeight / 2
         floor.name = "地面"
         scene.add(floor)
         const textLoader = new THREE.FontLoader()  //仓库编号文字
@@ -28,7 +28,7 @@ function creatFloor(floorWidth, floorHeight, floorDepth, scene, storeName) {
                 })
             const color = new THREE.MeshPhongMaterial({color: 0x9cb2d1});
             const textNum = new THREE.Mesh(storeText, color)
-            textNum.position.set(200, 1000, -floorDepth/2)
+            textNum.position.set(200, 1000, -floorDepth / 2)
             scene.add(textNum)
         })
     })

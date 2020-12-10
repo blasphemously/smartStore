@@ -1,6 +1,7 @@
 import * as THREE from 'three'
+
 const ThreeBSP = require('three-js-csg')(THREE)  //旧版threebsp,用于几何体组合形成新的几何体,这里用于给门挖洞
-function withDoorWall(wall_width, wall_height, wall_depth, door_width, door_height, door_depth, door_x,door_y,door_z,wall_x,wall_y,wall_z, scene,angle,material) {
+function withDoorWall(wall_width, wall_height, wall_depth, door_width, door_height, door_depth, door_x, door_y, door_z, wall_x, wall_y, wall_z, scene, angle, material) {
     const dwmaterial = new THREE.MeshPhongMaterial({
         color: 0x9cb2d1,
         specular: 0x9cb2d1,
@@ -9,12 +10,12 @@ function withDoorWall(wall_width, wall_height, wall_depth, door_width, door_heig
         opacity: 1
     })
     const wallGeometry = new THREE.BoxGeometry(wall_width, wall_height, wall_depth)
-    const wall = new THREE.Mesh(wallGeometry,material)
+    const wall = new THREE.Mesh(wallGeometry, material)
     wall.position.x = wall_x
     wall.position.y = wall_y
     wall.position.z = wall_z
     const doorGeometry = new THREE.BoxGeometry(door_width, door_height, door_depth)
-    const door = new THREE.Mesh(doorGeometry,material)
+    const door = new THREE.Mesh(doorGeometry, material)
     door.position.x = door_x
     door.position.y = door_y
     door.position.z = door_z
