@@ -89,7 +89,7 @@
         this.controls.enableDamping = true;
         this.controls.dampingFactor = 0.5;
 				// 视角最小距离
-        this.controls.minDistance = 100;
+        this.controls.minDistance = 1;
 				// 视角最远距离
         this.controls.maxDistance = 5000;
 				// 最大角度
@@ -98,10 +98,10 @@
 			}
 		},
     beforeDestroy() {
-      this.scene.dispose()
-      this.renderer.dispose()
-      this.camera.dispose()
-      this.controls.dispose()
+      this.scene=null
+      this.renderer=null
+      this.camera = null
+      this.controls=null
     }
 
 	}
