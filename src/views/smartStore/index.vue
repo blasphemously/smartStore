@@ -10,6 +10,7 @@ import createWall from './wall'
 import creatFloor from "@/views/smartStore/floor";
 import withDoorWall from "./door"
 import cargoArea from './cargoarea'
+import creatSkyBox from "@/views/smartStore/skybox";
 
 
 export default {
@@ -27,6 +28,7 @@ export default {
   methods: {
     init() {
       this.creatScene()  //创建场景
+      creatSkyBox(this.scene)
       creatFloor(2600, 1400, 1, this.scene, '蓝白第一仓库')  //创建地板以及仓库文字
       this.creatWall() //创建带门的围墙
       this.creatPoint() //创建灯光

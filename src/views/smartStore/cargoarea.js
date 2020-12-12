@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-
+import creatCargo from "@/views/smartStore/chargo";
 function cargoArea(storeId, scene) {
 //未有数据无法运行
     for (let i = 0; i < storeId.length; i++) {  //后台传过来的仓库的数据是个数组,所以要循环出来
@@ -73,6 +73,7 @@ function cargoArea(storeId, scene) {
             scene.add(cargoNum)
 
         })
+        creatCargo(scene,area_x,area_z)
     }
 }
 
