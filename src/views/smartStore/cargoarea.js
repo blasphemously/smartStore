@@ -1,18 +1,24 @@
 import * as THREE from 'three'
 import creatCargo from "@/views/smartStore/chargo";
-function cargoArea(storeId, scene) {
+// function cargoArea(storeId, scene) {
+function cargoArea(scene) {
 //未有数据无法运行
-    for (let i = 0; i < storeId.length; i++) {  //后台传过来的仓库的数据是个数组,所以要循环出来
-        const cargoAreaNum = storeId[i]
-        const area_x = cargoAreaNum.position.x || 400 //库区定位x
+//     for (let i = 0; i < storeId.length; i++) {  //后台传过来的仓库的数据是个数组,所以要循环出来
+//         const cargoAreaNum = storeId[i]
+//         const cargoAreaNum =null
+        // const area_x = cargoAreaNum.position.x || 400 //库区定位x
+        const area_x =  400 //库区定位x
 
         // const area_y = cargoAreaNum.position.y //库区定位y
-        const area_z = cargoAreaNum.position.z || 200 //库区定位z
+        // const area_z = cargoAreaNum.position.z || 200 //库区定位z
+        const area_z =  200 //库区定位z
 
         // const shelfRow = cargoAreaNum.row || 3 //库区货位行数
         // const shelfColumn = cargoAreaNum.column || 3//库区货位列数
-        const area_width = cargoAreaNum.width || 1000
-        const area_depth = cargoAreaNum.length || 200
+        // const area_width = cargoAreaNum.width || 1000
+        const area_width = 1000
+        // const area_depth = cargoAreaNum.length || 200
+        const area_depth = 200
 
         // const shelfSize = 3  //货位大小,货架大小
         // const interval = 1  //货位距离
@@ -20,7 +26,7 @@ function cargoArea(storeId, scene) {
         // const shelfInterval = shelfSize + interval  // 货位加距离
         // const aisleWidth = shelfInterval * shelfRow
         // const aisleLength = shelfInterval * shelfColumn
-        const Texturing = require('../../../public/static/images/line.png') //请求图片url路径,在vue中textureloader只能先进行require请求在放到textuteloader
+        const Texturing = require('../../../public/smartStore/images/line.png') //请求图片url路径,在vue中textureloader只能先进行require请求在放到textuteloader
 
         const lineMat = new THREE.TextureLoader().load(Texturing, function (map) {
             lineMat.map = map
@@ -74,7 +80,7 @@ function cargoArea(storeId, scene) {
 
         })
         creatCargo(scene,area_x,area_z)
-    }
+    // }
 }
 
 export default cargoArea

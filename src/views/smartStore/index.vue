@@ -23,7 +23,9 @@ export default {
     this.renderer = null // 渲染器
     this.camera = null // 相机
     this.controls = null // 控制器
+    this.element = document.getElementById('container')
     this.init() //初始的方法都放在init
+
   },
   methods: {
     init() {
@@ -32,11 +34,12 @@ export default {
       creatFloor(2600, 1400, 1, this.scene, '蓝白第一仓库')  //创建地板以及仓库文字
       this.creatWall() //创建带门的围墙
       this.creatPoint() //创建灯光
-      cargoArea([], this.scene)  // 创建仓库中的货区
+      cargoArea(this.scene)  // 创建仓库中的货区
       this.creatCamera() // 创建相机
       this.creatRenderer()  // 创建渲染器
       this.createControls() // 创建控制器
       this.render() //将场景相机放到渲染
+      this.element.addEventListener('click', this.onMouseClick, false)
 
     },
     creatScene() {
@@ -75,7 +78,6 @@ export default {
       this.scene.add(pointLight)
     },
     creatRenderer() {
-      const element = document.getElementById('container') // 获取当前页面的div id,确保canavs渲染在这个div中
       this.renderer = new THREE.WebGLRenderer({
         antialias: true, //是否开启反锯齿，设置为true开启反锯齿。
         alpha: true, //是否可以设置背景色透明。
@@ -84,7 +86,7 @@ export default {
       this.renderer.setSize(window.innerWidth, window.innerHeight)
       this.renderer.setClearColor('#39609B', 1.0)  //整个场景的颜色
       this.renderer.setPixelRatio(window.devicePixelRatio) // 设置分辨率与电脑的分辨率相同
-      element.appendChild(this.renderer.domElement)
+      this.element.appendChild(this.renderer.domElement)
     },
     render() {
       this.renderer.render(this.scene, this.camera)
@@ -102,6 +104,32 @@ export default {
       this.controls.maxPolarAngle = Math.PI / 2.2
       this.controls.target = new THREE.Vector3(1300, 50, -700) // 设置控制器的旋转原点
       this.controls.update()  //使用控制器设置旋转后更新,设置控制器后camera不能设置lookat,在这里uodate更新相机
+    },
+    onMouseClick(event) {
+      let x = ((event.clientX - this.element.getBoundingClientRect().left) / this.element.offsetWidth) * 2 - 1;
+      let y = -((event.clientY - this.element.getBoundingClientRect().top) / this.element.offsetHeight) * 2 + 1;
+      // 标准设备坐标转为世界坐标
+      let standardVector = new THREE.Vector3(x, y, 1);
+      let worldVector = standardVector.unproject(this.camera);
+
+      // 射线投射方向单位向量(worldVector坐标减相机位置坐标)
+      let ray = worldVector.sub(this.camera.position).normalize();
+
+      // 创建射线投射器对象
+      let rayCaster = new THREE.Raycaster(this.camera.position, ray);
+
+      // 返回射线选中的对象数组(第二个参数默认值是false，意为是否遍历图形内部的所有子图形)
+      let intersects = rayCaster.intersectObjects(this.scene.children, true);
+      if (intersects.length > 0 && intersects[0].object.name == '货物') {
+
+        // 射线拾取的首个对象
+        let currObj = intersects[0];
+
+        console.log(currObj);
+
+        console.log(currObj.object.name)
+        alert('选中成功')
+      }
     }
   },
   beforeDestroy() {  //在vue中结束前要销毁这些一直渲染的数据
@@ -115,5 +143,9 @@ export default {
 </script>
 
 <style scoped>
-
+#container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
 </style>
