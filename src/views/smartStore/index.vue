@@ -23,6 +23,7 @@ export default {
     this.renderer = null // 渲染器
     this.camera = null // 相机
     this.controls = null // 控制器
+    this.SELECTED = null
     this.element = document.getElementById('container')
     this.init() //初始的方法都放在init
 
@@ -121,14 +122,22 @@ export default {
       // 返回射线选中的对象数组(第二个参数默认值是false，意为是否遍历图形内部的所有子图形)
       let intersects = rayCaster.intersectObjects(this.scene.children, true);
       if (intersects.length > 0 && intersects[0].object.name == '货物') {
+        //设置selected,判断是否相等
+        if (this.SELECTED !== intersects[0].object) {
+          if (this.SELECTED != intersects[0].object) {
+            //不相等,获取到当前物体的颜色
+            if (this.SELECTED) this.SELECTED.material.emissive.setHex(this.SELECTED.currentHex);
+            this.SELECTED = intersects[0].object;
 
-        // 射线拾取的首个对象
-        let currObj = intersects[0];
-
-        console.log(currObj);
-
-        console.log(currObj.object.name)
-        alert('选中成功')
+            this.SELECTED.currentHex = this.SELECTED.material.emissive.getHex();
+            //改变颜色
+            this.SELECTED.material.emissive.setHex(0xff0000);
+          }
+        } else {
+          //相等,把之前的获取到的原本的颜色在重新赋给他
+          if (this.SELECTED) this.SELECTED.material.emissive.setHex(this.SELECTED.currentHex);
+          this.SELECTED = null;
+        }
       }
     }
   },
