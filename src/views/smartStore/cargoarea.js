@@ -70,12 +70,11 @@ function cargoArea(scene) {
                     height: 0.1
 
                 })
-            console.log('的辅导辅导费')
             const color = new THREE.MeshPhongMaterial({color: '#F92727'});
             const cargoNum = new THREE.Mesh(storeText, color)
             cargoNum.rotation.x = -Math.PI / 2.0
             cargoNum.rotation.z = -Math.PI / 2.0
-            cargoNum.position.set(area_x + lineWidth / 2, 1.5, -(area_z + area_depth / 2))
+            cargoNum.position.set(area_x , 1.5, -(area_z + area_depth))
             scene.add(cargoNum)
 
         })
